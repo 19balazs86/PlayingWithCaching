@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Extensions.Primitives;
 
-namespace PlayingWithCaching;
+namespace PlayingWithCaching.Miscellaneous;
 
 /// <summary>
 /// This is a copy of the DefaultPolicy, but it allows authenticated GET and HEAD methods to be cached
 /// </summary>
 public sealed class AuthCachePolicy : IOutputCachePolicy
 {
+    public static readonly AuthCachePolicy Instance = new AuthCachePolicy();
+
     public AuthCachePolicy()
     {
     }
 
-    /// <inheritdoc />
     public ValueTask CacheRequestAsync(OutputCacheContext context, CancellationToken cancellationToken)
     {
-        bool attemptOutputCaching    = AuthCachePolicy.attemptOutputCaching(context);
+        bool attemptOutputCaching = AuthCachePolicy.attemptOutputCaching(context);
 
         context.AllowCacheLookup    = attemptOutputCaching;
         context.AllowCacheStorage   = attemptOutputCaching;

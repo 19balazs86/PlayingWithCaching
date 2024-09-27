@@ -1,6 +1,6 @@
 ﻿using System.Net.Mime;
 
-namespace PlayingWithCaching;
+namespace PlayingWithCaching.Miscellaneous;
 
 public static class Gravatar
 {
