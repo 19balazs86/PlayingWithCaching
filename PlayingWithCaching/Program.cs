@@ -18,7 +18,7 @@ public static class Program
         {
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Hello from Playing with Caching");
+            app.MapGet("/", Gravatar.WriteGravatar);
         }
 
         app.UseAuthorization();
