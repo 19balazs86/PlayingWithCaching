@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.OutputCaching;
 
 namespace PlayingWithCaching;
 
 public static class Program
 {
+    public const string AuthScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,8 @@ public static class Program
 
         // Add services to the container
         {
+            services.addCookieAuth();
+
             services.AddAuthorization();
 
             services.AddOutputCache(options =>
@@ -30,9 +36,12 @@ public static class Program
 
         // Configure the HTTP request pipeline
         {
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseOutputCache();
+
+            app.MapAuthEndpoints();
 
             app.MapGet("/", Gravatar.WriteGravatar); // NoCache by default
 
@@ -51,5 +60,22 @@ public static class Program
     private static async Task handleEvictByTag(string tag, IOutputCacheStore cache)
     {
         await cache.EvictByTagAsync(tag, default);
+    }
+
+    private static void addCookieAuth(this IServiceCollection services)
+    {
+        services.AddAuthentication(AuthScheme)
+            .AddCookie(options =>
+            {
+                options.Cookie.Name = "auth-cookie";
+                options.Events.OnRedirectToLogin = preventRedirect;
+            });
+    }
+
+    private static Task preventRedirect(RedirectContext<CookieAuthenticationOptions> context)
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+        return Task.CompletedTask;
     }
 }
