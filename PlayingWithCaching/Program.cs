@@ -29,6 +29,8 @@ public static class Program
                 });
 
                 options.AddPolicy("Expire-1-min", builder => builder.Expire(TimeSpan.FromSeconds(60)));
+
+                options.AddPolicy("RequireAuth", builder => builder.AddPolicy<AuthCachePolicy>(), excludeDefaultPolicy: true);
             });
         }
 
@@ -48,6 +50,8 @@ public static class Program
             app.MapGet("/default", Gravatar.WriteGravatar).CacheOutput(); // It uses the BasePolicy
 
             app.MapGet("/expire1min", Gravatar.WriteGravatar).CacheOutput("Expire-1-min");
+
+            app.MapGet("/require-auth", Gravatar.WriteGravatar).RequireAuthorization().CacheOutput("RequireAuth");
 
             app.MapGet("/evict/{tag}", handleEvictByTag);
         }
