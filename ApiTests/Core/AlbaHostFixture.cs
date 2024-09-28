@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using OutputCachingApi.CachingUtils;
 
-namespace ApiTests;
+namespace ApiTests.Core;
 
 public sealed class AlbaHostFixture : IAsyncLifetime
 {
