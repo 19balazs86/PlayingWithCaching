@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "7eca3343-0fd0-4d03-84b3-13b8d4dac9df",
+		"name": "Caching",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8316451"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HostAddress}}/auth/login",
+							"host": [
+								"{{HostAddress}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HostAddress}}/auth/logout",
+							"host": [
+								"{{HostAddress}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Require-auth",
+			"item": [
+				{
+					"name": "Auth-NoCache",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HostAddress}}/require-auth",
+							"host": [
+								"{{HostAddress}}"
+							],
+							"path": [
+								"require-auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth-Default",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HostAddress}}/require-auth/default",
+							"host": [
+								"{{HostAddress}}"
+							],
+							"path": [
+								"require-auth",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth-VaryByUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HostAddress}}/require-auth/vary-by-user",
+							"host": [
+								"{{HostAddress}}"
+							],
+							"path": [
+								"require-auth",
+								"vary-by-user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NoCache",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HostAddress}}",
+					"host": [
+						"{{HostAddress}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Default",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HostAddress}}/default",
+					"host": [
+						"{{HostAddress}}"
+					],
+					"path": [
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Expire 1 min",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HostAddress}}/expire1min",
+					"host": [
+						"{{HostAddress}}"
+					],
+					"path": [
+						"expire1min"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Evict",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HostAddress}}/evict/tag-all",
+					"host": [
+						"{{HostAddress}}"
+					],
+					"path": [
+						"evict",
+						"tag-all"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HostAddress",
+			"value": "http://localhost:5104",
+			"type": "string"
+		}
+	]
+}
