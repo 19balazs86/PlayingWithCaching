@@ -26,11 +26,24 @@ public sealed class AnonimousTests(AlbaHostFixture albaHostFixture) : IClassFixt
         Assert.Equal(response.ResponseText1, response.ResponseText2);
     }
 
+    [Fact]
+    public async Task Response_NotEqual_When_Cache_Expired()
+    {
+        // Arrange
+        TimeSpan delay = TimeSpan.FromSeconds(AlbaHostFixture.CacheSettings.DefaultExpirationInSeconds + 1);
+
+        // Act
+        EndpointResponse response = await initiateHttpCalls(TestEndpoints.PathDefault, delay);
+
+        // Assert
+        Assert.NotEqual(response.ResponseText1, response.ResponseText2);
+    }
+
     private async Task<EndpointResponse> initiateHttpCalls(string urlPath, TimeSpan? delay = null)
     {
         string responseText1 = await _albaHost.GetAsText(urlPath);
 
-        await Task.Delay(delay ?? TimeSpan.FromSeconds(1));
+        await Task.Delay(delay ?? AlbaHostFixture.DefaultDelay);
 
         string responseText2 = await _albaHost.GetAsText(urlPath);
 

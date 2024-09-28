@@ -15,6 +15,7 @@ public sealed class Program
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services   = builder.Services;
+        IConfiguration configuration  = builder.Configuration;
 
         // Add services to the container
         {
@@ -24,14 +25,13 @@ public sealed class Program
 
             services.AddOutputCache(options =>
             {
-                options.AddBasePolicy(builder =>
-                {
-                    builder.NoCache()
-                           .Expire(TimeSpan.FromSeconds(20))
-                           .Tag("tag-all");
-                });
+                CacheSettings cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>() ?? throw new NullReferenceException("Missing configuration: CacheSettings");
 
-                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(TimeSpan.FromSeconds(60)));
+                options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(cacheSettings.DefaultExpirationInSeconds);
+
+                options.AddBasePolicy(builder => builder.NoCache().Tag("tag-all"));
+
+                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(TimeSpan.FromSeconds(cacheSettings.Expire1min)));
             });
         }
 
