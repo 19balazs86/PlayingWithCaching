@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.OutputCaching;
 using OutputCachingApi.CachingUtils;
 using OutputCachingApi.Miscellaneous;
 
@@ -8,6 +7,8 @@ namespace OutputCachingApi;
 
 public sealed class Program
 {
+    public const string CachePolicyName_Expire1min = "Expire-1-min";
+
     public const string AuthScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
     public static void Main(string[] args)
@@ -30,7 +31,7 @@ public sealed class Program
                            .Tag("tag-all");
                 });
 
-                options.AddPolicyAuth("Expire-1-min", builder => builder.Expire(TimeSpan.FromSeconds(60)));
+                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(TimeSpan.FromSeconds(60)));
             });
         }
 
@@ -45,25 +46,12 @@ public sealed class Program
 
             app.MapAuthEndpoints();
 
-            app.MapGet("/", Gravatar.WriteGravatar); // NoCache by default without .CacheOutput()
-
-            app.MapGet("/default", Gravatar.WriteGravatar).CacheOutputAuth(); // It uses the AuthCachePolicy.Instance and BasePolicy
-
-            app.MapGet("/expire1min", Gravatar.WriteGravatar).CacheOutput("Expire-1-min");
-
-            app.MapGet("/require-auth", Gravatar.WriteGravatar).RequireAuthorization().CacheOutputAuth(); // It uses the AuthCachePolicy.Instance and BasePolicy
-
-            app.MapGet("/evict/{tag}", handleEvictByTag);
+            app.MapTestEndpoints();
         }
 
         app.UseAuthorization();
 
         app.Run();
-    }
-
-    private static async Task handleEvictByTag(string tag, IOutputCacheStore cache)
-    {
-        await cache.EvictByTagAsync(tag, default);
     }
 
     private static void addCookieAuth(IServiceCollection services)
