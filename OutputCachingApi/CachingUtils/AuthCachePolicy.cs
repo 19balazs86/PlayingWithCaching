@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Extensions.Primitives;
 
-namespace OutputCachingApi.Miscellaneous;
+namespace OutputCachingApi.CachingUtils;
 
 /// <summary>
 /// This is a copy of the DefaultPolicy, but it allows authenticated GET and HEAD methods to be cached

@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.OutputCaching;
+using OutputCachingApi.CachingUtils;
 using OutputCachingApi.Miscellaneous;
 
 namespace OutputCachingApi;
 
-public static class Program
+public sealed class Program
 {
     public const string AuthScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
@@ -16,7 +17,7 @@ public static class Program
 
         // Add services to the container
         {
-            services.addCookieAuth();
+            addCookieAuth(services);
 
             services.AddAuthorization();
 
@@ -65,7 +66,7 @@ public static class Program
         await cache.EvictByTagAsync(tag, default);
     }
 
-    private static void addCookieAuth(this IServiceCollection services)
+    private static void addCookieAuth(IServiceCollection services)
     {
         services.AddAuthentication(AuthScheme)
             .AddCookie(options =>
