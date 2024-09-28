@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
-using OutputCachingApi.CachingUtils;
+using OutputCachingApi.Core;
 using System.Net.Mime;
 
 namespace OutputCachingApi.Endpoints;

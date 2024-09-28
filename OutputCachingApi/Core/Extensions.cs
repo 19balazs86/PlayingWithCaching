@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
 using System.Runtime.CompilerServices;
 
-namespace OutputCachingApi.CachingUtils;
+namespace OutputCachingApi.Core;
 
 public static class EndpointConvention_Extensions
 {

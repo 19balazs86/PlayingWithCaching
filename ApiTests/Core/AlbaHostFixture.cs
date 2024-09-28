@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OutputCachingApi.CachingUtils;
+using OutputCachingApi.Core;
 using System.Security.Claims;
 
 namespace ApiTests.Core;

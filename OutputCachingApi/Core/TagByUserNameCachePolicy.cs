@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
 
-namespace OutputCachingApi.CachingUtils;
+namespace OutputCachingApi.Core;
 
 public sealed class TagByUserNameCachePolicy : IOutputCachePolicy
 {

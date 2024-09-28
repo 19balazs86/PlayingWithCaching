@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using OutputCachingApi.CachingUtils;
+using OutputCachingApi.Core;
 using OutputCachingApi.Endpoints;
 
 namespace OutputCachingApi;

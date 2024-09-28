@@ -1,4 +1,4 @@
-﻿namespace OutputCachingApi.CachingUtils;
+﻿namespace OutputCachingApi.Core;
 
 public sealed class CacheSettings
 {
