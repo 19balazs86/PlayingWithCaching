@@ -1,6 +1,6 @@
 ﻿namespace ApiTests.Core;
 
-public abstract class EndpointTestBase
+public abstract class EndpointTestBase : IAsyncLifetime
 {
     protected readonly AlbaHostFixture _albaHostFixture;
 
@@ -22,5 +22,15 @@ public abstract class EndpointTestBase
         response.ResponseText2 = await _albaHost.GetAsText(urlPath);
 
         return response;
+    }
+
+    public async Task InitializeAsync()
+    {
+        await _albaHost.Scenario(scenario => scenario.Get.Url("/evict/tag-all"));
+    }
+
+    public Task DisposeAsync()
+    {
+        return Task.CompletedTask;
     }
 }

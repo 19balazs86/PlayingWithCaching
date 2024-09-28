@@ -26,5 +26,10 @@ public static class TestEndpoints
     private static async Task handleEvictByTag(string tag, IOutputCacheStore cache)
     {
         await cache.EvictByTagAsync(tag, default);
+
+        if ("tag-all".Equals(tag))
+        {
+            await cache.EvictByTagAsync("tag-auth", default);
+        }
     }
 }

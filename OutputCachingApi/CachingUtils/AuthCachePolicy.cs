@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.OutputCaching;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Extensions.Primitives;
 
 namespace OutputCachingApi.CachingUtils;
@@ -12,6 +13,15 @@ public sealed class AuthCachePolicy : IOutputCachePolicy
 
     public AuthCachePolicy()
     {
+    }
+
+    public static bool IsEndpointRequireAuthorization(HttpContext httpContext)
+    {
+        Endpoint? endpoint = httpContext.GetEndpoint();
+
+        IAuthorizeData? authorizeData = endpoint?.Metadata.GetMetadata<IAuthorizeData>();
+
+        return authorizeData is not null;
     }
 
     public ValueTask CacheRequestAsync(OutputCacheContext context, CancellationToken cancellationToken)

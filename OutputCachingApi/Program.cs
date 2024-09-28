@@ -31,8 +31,21 @@ public sealed class Program
 
                 options.AddBasePolicy(builder => builder.NoCache().Tag("tag-all"));
 
+                options.AddBasePolicy(builder =>
+                {
+                    builder.With(context => AuthCachePolicy.IsEndpointRequireAuthorization(context.HttpContext))
+                           .Tag("tag-auth");
+                });
+
                 options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(cacheSettings.Expire1min.Seconds()));
             });
+
+            // Install-Package Microsoft.AspNetCore.OutputCaching.StackExchangeRedis
+            //services.AddStackExchangeRedisOutputCache(options =>
+            //{
+            //    options.Configuration = "127.0.0.1:6379";
+            //    options.InstanceName  = "CachingApi";
+            //});
         }
 
         WebApplication app = builder.Build();
