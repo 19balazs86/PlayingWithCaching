@@ -27,11 +27,11 @@ public sealed class Program
             {
                 CacheSettings cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>() ?? throw new NullReferenceException("Missing configuration: CacheSettings");
 
-                options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(cacheSettings.DefaultExpirationInSeconds);
+                options.DefaultExpirationTimeSpan = cacheSettings.DefaultExpiration.Seconds();
 
                 options.AddBasePolicy(builder => builder.NoCache().Tag("tag-all"));
 
-                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(TimeSpan.FromSeconds(cacheSettings.Expire1min)));
+                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(cacheSettings.Expire1min.Seconds()));
             });
         }
 

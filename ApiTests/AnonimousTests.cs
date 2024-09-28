@@ -30,7 +30,7 @@ public sealed class AnonimousTests(AlbaHostFixture albaHostFixture) : IClassFixt
     public async Task Response_NotEqual_When_Cache_Expired()
     {
         // Arrange
-        TimeSpan delay = TimeSpan.FromSeconds(AlbaHostFixture.CacheSettings.DefaultExpirationInSeconds + 1);
+        TimeSpan delay = TimeSpan.FromSeconds(AlbaHostFixture.CacheSettings.DefaultExpiration + 1);
 
         // Act
         EndpointResponse response = await initiateHttpCalls(TestEndpoints.PathDefault, delay);

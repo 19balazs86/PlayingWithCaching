@@ -42,4 +42,9 @@ public static class OutputCacheExtensions
     {
         return builder.AddPolicy<AuthCachePolicy>();
     }
+
+    public static TimeSpan Seconds(this int seconds)
+    {
+        return TimeSpan.FromSeconds(seconds);
+    }
 }

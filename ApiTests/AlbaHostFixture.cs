@@ -8,9 +8,9 @@ public sealed class AlbaHostFixture : IAsyncLifetime
 {
     public IAlbaHost? AlbaWebHost { get; set; }
 
-    public static readonly TimeSpan DefaultDelay = TimeSpan.FromSeconds(1);
+    public static readonly TimeSpan DefaultDelay = 1.Seconds();
 
-    public static readonly CacheSettings CacheSettings = new CacheSettings { DefaultExpirationInSeconds = 5, Expire1min = 10 };
+    public static readonly CacheSettings CacheSettings = new CacheSettings { DefaultExpiration = 5, Expire1min = 10 };
 
     public async Task InitializeAsync()
     {
@@ -29,8 +29,8 @@ public sealed class AlbaHostFixture : IAsyncLifetime
     {
         var configurationOverridden = new Dictionary<string, string?>
         {
-            ["CacheSettings:DefaultExpirationInSeconds"] = CacheSettings.DefaultExpirationInSeconds.ToString(),
-            ["CacheSettings:Expire1min"]                 = CacheSettings.Expire1min.ToString()
+            ["CacheSettings:DefaultExpiration"] = CacheSettings.DefaultExpiration.ToString(),
+            ["CacheSettings:Expire1min"]        = CacheSettings.Expire1min.ToString()
         };
 
         configurationBuilder.AddInMemoryCollection(configurationOverridden);
