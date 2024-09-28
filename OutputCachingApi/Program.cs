@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.OutputCaching;
-using PlayingWithCaching.Miscellaneous;
+using OutputCachingApi.Miscellaneous;
 
-namespace PlayingWithCaching;
+namespace OutputCachingApi;
 
 public static class Program
 {

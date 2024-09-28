@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
 
-namespace PlayingWithCaching.Miscellaneous;
+namespace OutputCachingApi.Miscellaneous;
 
 public static class OutputCacheExtensions
 {

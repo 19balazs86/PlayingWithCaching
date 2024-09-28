@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using System.Security.Claims;
 
-namespace PlayingWithCaching.Miscellaneous;
+namespace OutputCachingApi.Miscellaneous;
 
 public static class AuthEndpoints
 {
