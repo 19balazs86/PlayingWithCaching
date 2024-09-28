@@ -24,13 +24,14 @@ public abstract class EndpointTestBase : IAsyncLifetime
         return response;
     }
 
+    // To get a fresh start with an empty cache, restart the server
     public async Task InitializeAsync()
     {
-        await _albaHost.Scenario(scenario => scenario.Get.Url("/evict/tag-all"));
+        await _albaHost.StartAsync();
     }
 
-    public Task DisposeAsync()
+    public async Task DisposeAsync()
     {
-        return Task.CompletedTask;
+        await _albaHost.StopAsync();
     }
 }

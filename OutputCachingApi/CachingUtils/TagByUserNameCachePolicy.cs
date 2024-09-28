@@ -2,18 +2,20 @@
 
 namespace OutputCachingApi.CachingUtils;
 
-public sealed class CustomTagsPolicy : IOutputCachePolicy
+public sealed class TagByUserNameCachePolicy : IOutputCachePolicy
 {
-    private readonly Func<HttpContext, string[]> _tagsFunc;
+    private readonly Func<string, string[]> _tagsFunc;
 
-    public CustomTagsPolicy(Func<HttpContext, string[]> tagsFunc)
+    public TagByUserNameCachePolicy(Func<string, string[]> tagsFunc)
     {
         _tagsFunc = tagsFunc;
     }
 
     public ValueTask CacheRequestAsync(OutputCacheContext context, CancellationToken cancellation)
     {
-        foreach (string tag in _tagsFunc(context.HttpContext))
+        string userName = getUserName(context.HttpContext);
+
+        foreach (string tag in _tagsFunc(userName))
         {
             context.Tags.Add(tag);
         }
@@ -29,5 +31,10 @@ public sealed class CustomTagsPolicy : IOutputCachePolicy
     public ValueTask ServeResponseAsync(OutputCacheContext context, CancellationToken cancellation)
     {
         return ValueTask.CompletedTask;
+    }
+
+    private static string getUserName(HttpContext httpContext)
+    {
+        return httpContext.User.Identity?.Name ?? "Anonymous";
     }
 }

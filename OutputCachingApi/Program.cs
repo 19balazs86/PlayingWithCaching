@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using OutputCachingApi.CachingUtils;
-using OutputCachingApi.Miscellaneous;
+using OutputCachingApi.Endpoints;
 
 namespace OutputCachingApi;
 
@@ -34,6 +34,7 @@ public sealed class Program
                 options.AddBasePolicy(builder =>
                 {
                     builder.With(context => AuthCachePolicy.IsEndpointRequireAuthorization(context.HttpContext))
+                           .TagByUserName()
                            .Tag("tag-auth");
                 });
 

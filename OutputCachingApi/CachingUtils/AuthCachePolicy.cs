@@ -33,7 +33,7 @@ public sealed class AuthCachePolicy : IOutputCachePolicy
         context.EnableOutputCaching = true;
         context.AllowLocking        = true;
 
-        // Vary by any query by default
+        // Vary by any query
         context.CacheVaryByRules.QueryKeys = "*";
 
         return ValueTask.CompletedTask;
@@ -48,14 +48,12 @@ public sealed class AuthCachePolicy : IOutputCachePolicy
     {
         var response = context.HttpContext.Response;
 
-        // Verify existence of cookie headers
         if (!StringValues.IsNullOrEmpty(response.Headers.SetCookie))
         {
             context.AllowCacheStorage = false;
             return ValueTask.CompletedTask;
         }
 
-        // Check response code
         if (response.StatusCode != StatusCodes.Status200OK)
         {
             context.AllowCacheStorage = false;

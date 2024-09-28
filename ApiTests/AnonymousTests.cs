@@ -16,7 +16,7 @@ public sealed class AnonymousTests : CommonTests
         // Act + Assert
         await _albaHost.Scenario(scenario =>
         {
-            scenario.Get.Url(TestEndpoints.PathRequireAuth);
+            scenario.Get.Url(TestEndpoints.PathRequireAuth_Default);
 
             scenario.StatusCodeShouldBe(StatusCodes.Status401Unauthorized);
         });
