@@ -61,13 +61,13 @@ public sealed class AuthenticatedTests : CommonTests
         Assert.NotEqual(response.ResponseText1, response.ResponseText2);
     }
 
-    private async Task<EndpointResponse> initiateHttpCalls_With2Users(string urlPath, TimeSpan? delay = null)
+    private async Task<EndpointResponse> initiateHttpCalls_With2Users(string urlPath)
     {
         var response = new EndpointResponse();
 
         response.ResponseText1 = await _albaHost.GetAsText(urlPath);
 
-        await Task.Delay(delay ?? AlbaHostFixture.DefaultDelay);
+        await Task.Delay(AlbaHostFixture.DefaultDelay);
 
         _albaHostFixture.TestUserClaims = TestUsers.User2Claims;
 
