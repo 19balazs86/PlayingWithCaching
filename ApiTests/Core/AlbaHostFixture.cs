@@ -15,7 +15,7 @@ public sealed class AlbaHostFixture : IAsyncLifetime
 
     public static readonly CacheSettings CacheSettings = new CacheSettings { DefaultExpiration = 5, Expire1min = 10 };
 
-    public IEnumerable<Claim> TestUserClaims { get; set; } = TestUsers.AnonimousClaims;
+    public IEnumerable<Claim> TestUserClaims { get; set; } = TestUsers.AnonymousClaims;
 
     public async Task InitializeAsync()
     {
