@@ -29,9 +29,7 @@ public static class Program
                            .Tag("tag-all");
                 });
 
-                options.AddPolicy("Expire-1-min", builder => builder.Expire(TimeSpan.FromSeconds(60)));
-
-                options.AddPolicy("RequireAuth", builder => builder.AddPolicy<AuthCachePolicy>(), excludeDefaultPolicy: true);
+                options.AddPolicyAuth("Expire-1-min", builder => builder.Expire(TimeSpan.FromSeconds(60)));
             });
         }
 
@@ -46,13 +44,13 @@ public static class Program
 
             app.MapAuthEndpoints();
 
-            app.MapGet("/", Gravatar.WriteGravatar); // NoCache by default
+            app.MapGet("/", Gravatar.WriteGravatar); // NoCache by default without .CacheOutput()
 
-            app.MapGet("/default", Gravatar.WriteGravatar).CacheOutput(); // It uses the BasePolicy
+            app.MapGet("/default", Gravatar.WriteGravatar).CacheOutputAuth(); // It uses the AuthCachePolicy.Instance and BasePolicy
 
             app.MapGet("/expire1min", Gravatar.WriteGravatar).CacheOutput("Expire-1-min");
 
-            app.MapGet("/require-auth", Gravatar.WriteGravatar).RequireAuthorization().CacheOutput("RequireAuth");
+            app.MapGet("/require-auth", Gravatar.WriteGravatar).RequireAuthorization().CacheOutputAuth(); // It uses the AuthCachePolicy.Instance and BasePolicy
 
             app.MapGet("/evict/{tag}", handleEvictByTag);
         }
