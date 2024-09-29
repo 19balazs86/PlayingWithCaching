@@ -3,4 +3,37 @@
 GET {{HostAddress}}/
 Accept: application/json
 
-###
+### Default
+
+GET {{HostAddress}}/default
+Accept: application/json
+
+### Expire in 1 min
+
+GET {{HostAddress}}/expire1min
+Accept: application/json
+
+### Auth - Login
+
+GET {{HostAddress}}/auth/login
+Accept: application/json
+
+### Auth - Logout
+
+GET {{HostAddress}}/auth/logout
+Accept: application/json
+
+### Require-auth - NoCache
+
+GET {{HostAddress}}/require-auth
+Accept: application/json
+
+### Require-auth - Default
+
+GET {{HostAddress}}/require-auth/default
+Accept: application/json
+
+### Require-auth - VaryByUser
+
+GET {{HostAddress}}/require-auth/vary-by-user
+Accept: application/json

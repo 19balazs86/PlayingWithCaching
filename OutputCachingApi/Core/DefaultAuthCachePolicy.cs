@@ -7,11 +7,11 @@ namespace OutputCachingApi.Core;
 /// <summary>
 /// This is a copy of the DefaultPolicy, but it allows authenticated GET and HEAD methods to be cached
 /// </summary>
-public sealed class AuthCachePolicy : IOutputCachePolicy
+public sealed class DefaultAuthCachePolicy : IOutputCachePolicy
 {
-    public static readonly AuthCachePolicy Instance = new AuthCachePolicy();
+    public static readonly DefaultAuthCachePolicy Instance = new DefaultAuthCachePolicy();
 
-    public AuthCachePolicy()
+    public DefaultAuthCachePolicy()
     {
     }
 
@@ -26,7 +26,7 @@ public sealed class AuthCachePolicy : IOutputCachePolicy
 
     public ValueTask CacheRequestAsync(OutputCacheContext context, CancellationToken cancellationToken)
     {
-        bool attemptOutputCaching = AuthCachePolicy.attemptOutputCaching(context);
+        bool attemptOutputCaching = DefaultAuthCachePolicy.attemptOutputCaching(context);
 
         context.AllowCacheLookup    = attemptOutputCaching;
         context.AllowCacheStorage   = attemptOutputCaching;

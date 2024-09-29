@@ -25,20 +25,18 @@ public sealed class Program
 
             services.AddOutputCache(options =>
             {
-                CacheSettings cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>() ?? throw new NullReferenceException("Missing configuration: CacheSettings");
-
-                options.DefaultExpirationTimeSpan = cacheSettings.DefaultExpiration.Seconds();
+                options.DefaultExpirationTimeSpan = configuration.GetValue("CacheSettings:DefaultExpiration", 20).Seconds();
 
                 options.AddBasePolicy(builder => builder.NoCache().Tag("tag-all"));
 
                 options.AddBasePolicy(builder =>
                 {
-                    builder.With(context => AuthCachePolicy.IsEndpointRequireAuthorization(context.HttpContext))
+                    builder.With(context => DefaultAuthCachePolicy.IsEndpointRequireAuthorization(context.HttpContext))
                            .TagByUserName()
                            .Tag("tag-auth");
                 });
 
-                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(cacheSettings.Expire1min.Seconds()));
+                options.AddPolicyAuth(CachePolicyName_Expire1min, builder => builder.Expire(60.Seconds()));
             });
 
             // Install-Package Microsoft.AspNetCore.OutputCaching.StackExchangeRedis

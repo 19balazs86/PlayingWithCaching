@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OutputCachingApi.Core;
 using System.Security.Claims;
 
 namespace ApiTests.Core;
@@ -10,10 +9,6 @@ namespace ApiTests.Core;
 public sealed class AlbaHostFixture : IAsyncLifetime
 {
     public IAlbaHost? AlbaWebHost { get; private set; }
-
-    public static readonly TimeSpan DefaultDelay = 1.Seconds();
-
-    public static readonly CacheSettings CacheSettings = new CacheSettings { DefaultExpiration = 5, Expire1min = 10 };
 
     public IEnumerable<Claim> TestUserClaims { get; set; } = TestUsers.AnonymousClaims;
 
@@ -38,8 +33,7 @@ public sealed class AlbaHostFixture : IAsyncLifetime
     {
         var configurationOverridden = new Dictionary<string, string?>
         {
-            ["CacheSettings:DefaultExpiration"] = CacheSettings.DefaultExpiration.ToString(),
-            ["CacheSettings:Expire1min"]        = CacheSettings.Expire1min.ToString()
+            ["CacheSettings:DefaultExpiration"] = EndpointTestBase.CacheDefaultExpiration.ToString()
         };
 
         configurationBuilder.AddInMemoryCollection(configurationOverridden);

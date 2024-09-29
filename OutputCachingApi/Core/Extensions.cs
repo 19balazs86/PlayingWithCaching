@@ -7,13 +7,7 @@ public static class EndpointConvention_Extensions
 {
     public static TBuilder CacheOutputAuth<TBuilder>(this TBuilder builder) where TBuilder : IEndpointConventionBuilder
     {
-        ArgumentNullException.ThrowIfNull(builder);
-
-        // Enable caching if this method is invoked on an endpoint, extra policies can disable it
-
-        builder.Add(endpointBuilder => endpointBuilder.Metadata.Add(AuthCachePolicy.Instance));
-
-        return builder;
+        return builder.WithMetadata(DefaultAuthCachePolicy.Instance);
     }
 
     public static TBuilder CacheOutputAuth<TBuilder>(this TBuilder builder, Action<OutputCachePolicyBuilder> builderAction)
@@ -21,7 +15,7 @@ public static class EndpointConvention_Extensions
     {
         Action<OutputCachePolicyBuilder> innerAction = policyBuilder =>
         {
-            policyBuilder.AddAuthCachePolicy();
+            policyBuilder.AddDefaultAuthPolicy();
 
             builderAction(policyBuilder);
         };
@@ -36,7 +30,7 @@ public static class OutputCacheOptions_Extensions
     {
         cacheOptions.AddPolicy(name, builder =>
         {
-            builder.AddAuthCachePolicy();
+            builder.AddDefaultAuthPolicy();
 
             builderAction(builder);
         }, excludeDefaultPolicy: true);
@@ -45,9 +39,9 @@ public static class OutputCacheOptions_Extensions
 
 public static class OutputCachePolicyBuilder_Extensions
 {
-    public static OutputCachePolicyBuilder AddAuthCachePolicy(this OutputCachePolicyBuilder builder)
+    public static OutputCachePolicyBuilder AddDefaultAuthPolicy(this OutputCachePolicyBuilder builder)
     {
-        return builder.AddPolicy<AuthCachePolicy>();
+        return builder.AddPolicy<DefaultAuthCachePolicy>();
     }
 
     public static OutputCachePolicyBuilder VaryByUserName(this OutputCachePolicyBuilder builder, string key = "UserName")

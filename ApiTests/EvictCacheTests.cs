@@ -15,7 +15,7 @@ public sealed class EvictCacheTests(AlbaHostFixture albaHostFixture) : EndpointT
         EndpointResponse response = await initiateHttpCalls_EvictCache(TestEndpoints.PathDefault);
 
         // Assert
-        Assert.NotEqual(response.ResponseText1, response.ResponseText2);
+        response.AssertNotEqual();
     }
 
     [Theory]
@@ -31,7 +31,7 @@ public sealed class EvictCacheTests(AlbaHostFixture albaHostFixture) : EndpointT
         EndpointResponse response = await initiateHttpCalls_EvictCache(TestEndpoints.PathRequireAuth_Default, tagName);
 
         // Assert
-        Assert.NotEqual(response.ResponseText1, response.ResponseText2);
+        response.AssertNotEqual();
     }
 
     [Theory]
@@ -48,21 +48,19 @@ public sealed class EvictCacheTests(AlbaHostFixture albaHostFixture) : EndpointT
         EndpointResponse response = await initiateHttpCalls_EvictCache(TestEndpoints.PathRequireAuth_VaryByUser, tagName);
 
         // Assert
-        Assert.NotEqual(response.ResponseText1, response.ResponseText2);
+        response.AssertNotEqual();
     }
 
     private async Task<EndpointResponse> initiateHttpCalls_EvictCache(string urlPath, string tagName = "tag-all")
     {
-        var response = new EndpointResponse();
-
-        response.ResponseText1 = await _albaHost.GetAsText(urlPath);
+        string response1 = await _albaHost.GetAsText(urlPath);
 
         await _albaHost.GetAsText($"/evict/{tagName}");
 
-        await Task.Delay(AlbaHostFixture.DefaultDelay);
+        await Task.Delay(DefaultDelay);
 
-        response.ResponseText2 = await _albaHost.GetAsText(urlPath);
+        string response2 = await _albaHost.GetAsText(urlPath);
 
-        return response;
+        return new EndpointResponse(response1, response2);
     }
 }

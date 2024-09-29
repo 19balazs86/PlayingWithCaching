@@ -10,7 +10,7 @@ public abstract class CommonTests(AlbaHostFixture albaHostFixture) : EndpointTes
         EndpointResponse response = await initiateHttpCalls(TestEndpoints.PathBase);
 
         // Assert
-        Assert.NotEqual(response.ResponseText1, response.ResponseText2);
+        response.AssertNotEqual();
     }
 
     [Fact]
@@ -20,19 +20,19 @@ public abstract class CommonTests(AlbaHostFixture albaHostFixture) : EndpointTes
         EndpointResponse response = await initiateHttpCalls(TestEndpoints.PathDefault);
 
         // Assert
-        Assert.Equal(response.ResponseText1, response.ResponseText2);
+        response.AssertEqual();
     }
 
     [Fact]
     public async Task Response_NotEqual_When_Cache_Expired()
     {
         // Arrange
-        TimeSpan delay = TimeSpan.FromSeconds(AlbaHostFixture.CacheSettings.DefaultExpiration + 1);
+        TimeSpan delay = TimeSpan.FromSeconds(CacheDefaultExpiration + 1);
 
         // Act
         EndpointResponse response = await initiateHttpCalls(TestEndpoints.PathDefault, delay);
 
         // Assert
-        Assert.NotEqual(response.ResponseText1, response.ResponseText2);
+        response.AssertNotEqual();
     }
 }
