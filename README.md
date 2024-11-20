@@ -29,5 +29,6 @@ I also added an example that tags the cache with the username. This feature not 
 #### HybridCache
 
 - [HybridCache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/hybrid) 📚*MS-Learn*
+- [HybridCache](https://www.milanjovanovic.tech/blog/hybrid-cache-in-aspnetcore-new-caching-library) 📓*Milan's newsletter*
 - [Caching](https://www.milanjovanovic.tech/blog/caching-in-aspnetcore-improving-application-performance) *(Memory, Distributed, Hybrid)* 📓*Milan's newsletter*
 - [Caching](https://youtu.be/7DSNFwsYR8E) *(Memory, Distributed, Hybrid)* 📽️*10 min - Coding Shorts*
