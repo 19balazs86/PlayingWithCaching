@@ -26,6 +26,11 @@ I also added an example that tags the cache with the username. This feature not 
 - [Output caching middleware](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/output) 📚*MS-Learn*
 - [Ultimate guide for Output Caching](https://youtu.be/BMXgJxSaDSo) 📽️*23 min - Milan*
 
+#### FusionCache
+
+- [FusionCache](https://github.com/ZiggyCreatures/FusionCache) 👤*ZiggyCreatures*
+- [Introduction to FusionCache](https://youtu.be/SNoJtwiY4c4) 📽️*12 min - Nick*
+
 #### HybridCache
 
 - [HybridCache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/hybrid) 📚*MS-Learn*
